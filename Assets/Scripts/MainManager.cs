@@ -39,6 +39,7 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+        MenuManager.Instance.LoadBestScore();
         SetBestScore();
     }
 
@@ -77,15 +78,24 @@ public class MainManager : MonoBehaviour
         if (MenuManager.Instance.BestScore < m_Points)
         {
             MenuManager.Instance.BestScore = m_Points;
+            MenuManager.Instance.playerNameBest = MenuManager.Instance.playerName;
+            MenuManager.Instance.SaveBestScore();
+            SetBestScore();
+            
         }
-        SetBestScore();
+        
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
 
     public void SetBestScore()
     {
-        BestScoreText.text = "Best Score: " + MenuManager.Instance.playerName + ": " + MenuManager.Instance.BestScore;
+        BestScoreText.text = "Best Score: " + MenuManager.Instance.playerNameBest + ": " + MenuManager.Instance.BestScore;
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
 }
